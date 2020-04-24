@@ -6,18 +6,11 @@ import Action from './Action';
 import Options from './Options';
 
 class IndecisionApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        this.state = {
-            options: []
-        };
-    }
+    state = {
+        options: []
+    };
 
-    componentDidMount() {
+    componentDidMount = () => {
         try {
             const json = localStorage.getItem('options');
             const options = JSON.parse(json);
@@ -28,26 +21,26 @@ class IndecisionApp extends React.Component {
         } catch (e) {
             // Do nothing at all
         }
-    }
+    };
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate = (prevProps, prevState) => {
         if (prevState.options.length !== this.state.options.length) {
             const json = JSON.stringify(this.state.options);
             localStorage.setItem('options', json);
         }
-    }
+    };
 
-    handleDeleteOptions() {
+    handleDeleteOptions = () => {
         this.setState(() => ({ options: [] }));
-    }
+    };
 
-    handleDeleteOption(optionToRemove) {
+    handleDeleteOption = (optionToRemove) => {
         this.setState((prevState) => ({
             options: prevState.options.filter((option) => optionToRemove !== option)
         }));
-    }
+    };
 
-    handleAddOption(newOption) {
+    handleAddOption = (newOption) => {
         if (!newOption) {
             return 'Enter valid value to add item';
         } else if (this.state.options.indexOf(newOption) > -1) {
@@ -57,13 +50,13 @@ class IndecisionApp extends React.Component {
         this.setState((prevState) => ({ 
             options: prevState.options.concat(newOption) 
         }));
-    }
+    };
 
-    handlePick() {
+    handlePick = () => {
         const randomNum = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randomNum];
         alert(option);
-    }
+    };
 
     render() {
         const subtitle = 'Put your life in the hands of a computer';
